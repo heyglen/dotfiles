@@ -205,15 +205,6 @@ function getcertnames() {
 	fi;
 }
 
-# `s` with no arguments opens the current directory in Sublime Text, otherwise
-# opens the given location
-function s() {
-	if [ $# -eq 0 ]; then
-		subl .;
-	else
-		subl "$@";
-	fi;
-}
 
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
@@ -232,3 +223,13 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+
+# Linux specific
+if [ -z "$OS" ]; then
+    commit() { git commit "$@" ;}
+	s() { git status "$@" ;}
+	checkout() { git checkout "$@" ;}
+	p() { git pull "$@" ;}
+	push() { git push "$@" ;}
+fi;
