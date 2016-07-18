@@ -1,1 +1,20 @@
+#!/usr/bin/env bash
+
+# File
 alias o="explorer ."
+
+# Session
+alias afk="rundll32.exe user32.dll,LockWorkStation"
+
+# Git
+alias s=git status $*
+alias add=git add $*
+alias pull=git pull $*
+alias push=git push $*
+alias branch=git branch $*
+alias checkout=git checkout $*
+alias b=git branch $*
+alias commit=git commit $*
+
+# Python
+alias ipy=ipython $*

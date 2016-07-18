@@ -9,3 +9,18 @@ alias j="jobs"
 # Get week number
 alias week='date +%V'
 
+## Python
+alias ipy="ipython"
+
+## Git 
+alias log="git log"
+alias add="git add"
+alias commit="git commit"
+alias status="git status"
+alias s="git status"
+alias pull="git pull"
+alias push="git push"
+alias branch="git branch"
+alias checkout="git checkout"
+		
+alias update="sudo apt update"
