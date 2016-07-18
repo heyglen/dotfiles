@@ -4,3 +4,8 @@
 alias f="fg"
 alias j="jobs"
 
+# Date
+
+# Get week number
+alias week='date +%V'
+
