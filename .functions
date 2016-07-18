@@ -144,6 +144,11 @@ function digga() {
 	dig +nocmd "$1" any +multiline +noall +answer;
 }
 
+# Get Week number
+function week() {
+	python -c "import datetime; print datetime.datetime.now().isocalendar()[1]"
+}
+
 # UTF-8-encode a string of Unicode symbols
 function escape() {
 	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u);
