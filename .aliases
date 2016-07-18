@@ -26,6 +26,7 @@ fi
 
 # List all files colorized in long format
 alias l="ls -lF ${colorflag}"
+alias ll="ls -lF ${colorflag}"
 
 # List all files colorized in long format, including dot files
 alias la="ls -laF ${colorflag}"
@@ -52,9 +53,6 @@ alias week='date +%V'
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
-
-# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update=''
 
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
@@ -110,7 +108,11 @@ alias reload="exec $SHELL -l"
 
 if [ -z "$OS" ]; then
     # Linux
+
+		## Python
     alias ipy="ipython"
+
+		## Git 
     alias log="git log"
     alias add="git add"
     alias commit="git commit"
@@ -120,6 +122,9 @@ if [ -z "$OS" ]; then
     alias push="git push"
     alias branch="git branch"
     alias checkout="git checkout"
+		
+		# Debian
+		alias update="sudo apt update"
 else
     if [ "$OS" = "Windows_NT" ]; then
         # Windows

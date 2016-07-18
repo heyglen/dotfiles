@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+commit() { git commit "$@" ;}
+s() { git status "$@" ;}
+checkout() { git checkout "$@" ;}
+p() { git pull "$@" ;}
+push() { git push "$@" ;}
