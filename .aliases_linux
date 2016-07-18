@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Task management
+alias f="fg"
+alias j="jobs"
+
