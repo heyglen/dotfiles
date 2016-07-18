@@ -12,10 +12,15 @@ alias -- -="cd -"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias h="history"
+
+# Task shortcuts
 alias j="jobs"
 
 # Application Shorcuts
 alias ipy="ipython"
+
+# Typo
+alias ivm="vim"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
