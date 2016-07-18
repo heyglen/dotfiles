@@ -110,6 +110,16 @@ alias reload="exec $SHELL -l"
 
 if [ -z "$OS" ]; then
     # Linux
+    alias ipy="ipython"
+    alias log="git log"
+    alias add="git add"
+    alias commit="git commit"
+    alias status="git status"
+    alias s="git status"
+    alias pull="git pull"
+    alias push="git push"
+    alias branch="git branch"
+    alias checkout="git checkout"
 else
     if [ "$OS" = "Windows_NT" ]; then
         # Windows
@@ -124,13 +134,6 @@ else
 				alias commit=git commit $*
 				alias ipy=ipython $*
     else
-        alias ipy="ipython"
-        alias log="git log"
-        alias add="git add"
-        alias commit="git commit"
-        alias status="git status"
-        alias s="git status"
-        alias pull="git pull"
-        alias push="git push"
+				echo "Unknown OS"
     fi;
 fi;
