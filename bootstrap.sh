@@ -18,7 +18,7 @@ function bootstrap() {
 }
 
 function windowsBootstrap() {
-    dotfiles=( ".aliases" ".bash_profile" ".bash_prompt" ".bashrc" ".gitignore" ".gitmodules" ".gitconfig" ".inputrc" ".vimrc" ".wgetrc" ".vim")
+    dotfiles=( ".aliases" ".bash_profile" ".function" ".bash_prompt" ".bashrc" ".gitignore" ".gitmodules" ".gitconfig" ".inputrc" ".vimrc" ".wgetrc" ".vim")
 
     for i in "${dotfiles[@]}"
     do
@@ -26,7 +26,7 @@ function windowsBootstrap() {
         cp -r "$DOTFILENAME" ~
     done
     unset DOTFILENAME
-    mv ~/.vimrc ~/_vimrc    
+    mv ~/.vimrc ~/_vimrc
 }
 
 function linuxBootstrap() {
