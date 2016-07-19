@@ -228,3 +228,61 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+# Add a remote host to ssh known host list
+function known_host() {
+    if [ -z "$1" ]; then
+        echo "Missing hostname"
+        return 1
+    fi
+    ssh_hostname=$1
+
+    # Get the key on the remote server
+    ssh_key=`ssh-keyscan $ssh_hostname 2> /dev/null`
+
+    # Add an ssh key to known_hosts if not already known
+    if ! grep -F $ssh_key $HOME/.ssh/known_hosts &> /dev/null ; then
+        echo $ssh_key >> $HOME/.ssh/known_hosts
+    fi
+
+    unset ssh_key
+    unset ssh_hostname
+}
+
+
+# Setup ssh keys on a remote host
+function deploy_key() {
+
+    if [ -z "$1" ]; then
+        echo "Missing hostname"
+        return 1
+    fi
+    ssh_hostname=$1
+
+    # Setup RSA keys if not already done
+    if ! ls $HOME/.ssh/id_rsa &> /dev/null ; then
+        ssh-keygen -t rsa
+    fi
+
+    known_host($ssh_hostname)
+
+    # If public key authentication is not possible copy the public key to the server
+    if ! ssh -q -o PreferredAuthentications=publickey -o PubkeyAuthentication=yes -o BatchMode=yes $nm_server "echo test" &> /dev/null; then
+        ssh-copy-id $USER@$ssh_hostname 2> /dev/null
+        if ! ssh -q -o PreferredAuthentications=publickey -o PubkeyAuthentication=yes -o BatchMode=yes $nm_server "echo test" &> /dev/null; then
+            echo "Failed to copy key to $ssh_hostname"
+        fi
+    fi
+
+    unset ssh_hostname
+}
+
+# Change command window title
+function title() {
+   if [ -z "$1" ]; then
+      echo "Missing title"
+      return 1
+    fi
+    echo -ne \"\033]0;$1\x5c$1\007\"
+}
+
