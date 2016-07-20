@@ -44,7 +44,7 @@ function linuxBootstrap() {
 		--exclude 'bootstrap.sh' \
 		--exclude 'README.md' \
 		--exclude 'LICENSE-MIT.txt' \
-		-avh --no-perms $DOTFILESPATH $HOME
+		-avh --no-perms $DOTFILESPATH/ $HOME
 	source ~/.bash_profile
 }
 
