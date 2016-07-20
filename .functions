@@ -250,7 +250,7 @@ function known_host() {
 }
 
 
-# Setup ssh keys on a remote host
+# Deploy ssh keys on a remote host
 function deploy_key() {
 
     if [ -z "$1" ]; then

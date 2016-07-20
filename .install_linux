@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+function install_python_src() {
+	package_dir=$USER/Downloads/package
+	if [ -z $1 ]; then
+		python_version=$1
+	else
+		python_version=2.7.12
+	fi
+	if [ -z $2 ]; then
+		install_prefix="--prefix=$2"
+	else
+		install_prefix=
+	fi
+
+	# Setup environment
+	mkdir -p $package_dir
+
+	# Downlaod Requirements
+	wget http://www.python.org/ftp/python/$python_version/Python-$python_version.tgz --directory-prefix=$package_dir
+	wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$package_dir
+
+	# Extract
+	tar zxf $package_dir/Python-$python_version.tgz -C $package_dir
+	rm $package_dir/Python-$python_version.tgz
+
+	# Install
+	## Python
+	cd $package_dir/Python-$python_version
+	./configure $install_prefix
+	make
+	make install
+
+	## Pip
+	cd $package_dir
+	python get-pip.py
+
+	# Cleanup
+	rm -fr $package_dir/get-pip.py
+	rm -fr $package_dir/Python-$python_version
+
+	unset package_dir
+	unset install_prefix
+	unset python_version
+}

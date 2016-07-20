@@ -5,7 +5,7 @@ export PATH="$HOME/bin:$PATH";
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-	for file in ~/.{path,bash_prompt,exports,aliases_linux,aliases,functions,linux_functions,extra}; do
+	for file in ~/.{path,bash_prompt,exports,install_linux,aliases_linux,aliases,functions,linux_functions,extra}; do
 		[ -r "$file" ] && [ -f "$file" ] && source "$file";
 	done;
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
