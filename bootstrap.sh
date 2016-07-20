@@ -29,12 +29,12 @@ function windowsBootstrap() {
 }
 
 function linuxBootstrap() {
-	rsync --exclude ".git/" \
-		--exclude ".DS_Store" \
-		--exclude "bootstrap.sh" \
-		--exclude "README.md" \
-		--exclude "LICENSE-MIT.txt" \
-		-avh --no-perms . ~
+	rsync --exclude '.git/' \
+		--exclude '.DS_Store' \
+		--exclude 'bootstrap.sh' \
+		--exclude 'README.md' \
+		--exclude 'LICENSE-MIT.txt' \
+		-avh --no-perms $DOTFILESPATH ~
 	source ~/.bash_profile
 }
 
