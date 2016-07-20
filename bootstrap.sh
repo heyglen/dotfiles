@@ -2,7 +2,6 @@
 
 
 function start_bootstrap() {
-	DOTFILESPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	if [ "$OS" == "" ]; then
 		linuxBootstrap
 	elif [ "$OS" = "Windows_NT" ]; then
@@ -13,6 +12,7 @@ function start_bootstrap() {
 }
 
 function windowsBootstrap() {
+	local DOTFILESPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	git --git-dir=$DOTFILESPATH\.git pull origin master
 	DOTFILESPATH=$(echo "$DOTFILESPATH" | sed "s/\/c/c:/" | sed "s/\//\\\/g")
 	dotfiles=( ".aliases" ".bash_profile" ".function" ".bash_prompt" ".bashrc" ".gitignore" ".gitmodules" ".gitconfig" ".inputrc" ".vimrc" ".wgetrc" ".vim" )
@@ -26,6 +26,8 @@ function windowsBootstrap() {
 }
 
 function linuxBootstrap() {
+	local DOTFILESPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 	git --git-dir=$DOTFILESPATH/.git pull origin master
 	rsync --exclude '.git/' \
 		--exclude '.DS_Store' \
@@ -41,5 +43,3 @@ start_bootstrap
 unset start_bootstrap
 unset windowsBootstrap
 unset linuxBootstrap
-unset SCRIPT
-unset DOTFILESPATH
