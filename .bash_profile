@@ -4,12 +4,17 @@ export PATH="$HOME/bin:$PATH"
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
+for file in ~/.{path,bash_prompt,aliases,functions,windows_functions,extra}; do
+	[ -r "$file" ] && [ -f "$file" ] && source "$file"
+done
+
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-	for file in ~/.{path,bash_prompt,exports,install_linux,aliases_linux,aliases,functions,linux_functions,extra}; do
+	for file in ~/.{install_linux,aliases_linux,linux_functions}; do
 		[ -r "$file" ] && [ -f "$file" ] && source "$file"
 	done
+
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
-	for file in ~/.{path,bash_prompt,exports,aliases_windows,aliases,functions,windows_functions,extra}; do
+	for file in ~/.{aliases_windows,windows_functions}; do
 		[ -r "$file" ] && [ -f "$file" ] && source "$file"
 	done
 
