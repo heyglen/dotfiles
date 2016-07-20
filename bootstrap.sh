@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
 
-SCRIPT=$(readlink -f -- "$0")
-DOTFILESPATH=$(dirname "$SCRIPT")
-
-
-git --git-dir=$DOTFILESPATH pull origin master
 
 function start_bootstrap() {
+	DOTFILESPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	if [ "$OS" == "" ]; then
 		linuxBootstrap
 	elif [ "$OS" = "Windows_NT" ]; then
@@ -17,6 +13,7 @@ function start_bootstrap() {
 }
 
 function windowsBootstrap() {
+	git --git-dir=$DOTFILESPATH\.git pull origin master
 	DOTFILESPATH=$(echo "$DOTFILESPATH" | sed "s/\/c/c:/" | sed "s/\//\\\/g")
 	dotfiles=( ".aliases" ".bash_profile" ".function" ".bash_prompt" ".bashrc" ".gitignore" ".gitmodules" ".gitconfig" ".inputrc" ".vimrc" ".wgetrc" ".vim" )
 
@@ -29,6 +26,7 @@ function windowsBootstrap() {
 }
 
 function linuxBootstrap() {
+	git --git-dir=$DOTFILESPATH/.git pull origin master
 	rsync --exclude '.git/' \
 		--exclude '.DS_Store' \
 		--exclude 'bootstrap.sh' \
