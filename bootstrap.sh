@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
-SCRIPT=$(readlink -f -- $0")
-DOTFILESPATH=$(dirname "$SCRIPT" | sed "s/\/c/c:/" | sed "s/\//\\\/g")
+SCRIPT=$(readlink -f -- "$0")
+DOTFILESPATH=$(dirname "$SCRIPT")
 
-git pull origin master
+
+git --git-dir=$DOTFILESPATH pull origin master
 
 function start_bootstrap() {
-	if [ -z "$OS" ]; then
+	if [ "$OS" == "" ]; then
 		linuxBootstrap
+	elif [ "$OS" = "Windows_NT" ]; then
+		windowsBootstrap
 	else
-		if [ "$OS" = "Windows_NT" ]; then
-			windowsBootstrap
-		else
-			echo "ERROR: Unknown OS: $OS"
-		fi
+		echo "ERROR: Unknown OS: $OS"
 	fi
 }
 
 function windowsBootstrap() {
+	DOTFILESPATH=$(echo "$DOTFILESPATH" | sed "s/\/c/c:/" | sed "s/\//\\\/g")
 	dotfiles=( ".aliases" ".bash_profile" ".function" ".bash_prompt" ".bashrc" ".gitignore" ".gitmodules" ".gitconfig" ".inputrc" ".vimrc" ".wgetrc" ".vim" )
 
 	for i in "${dotfiles[@]}"
