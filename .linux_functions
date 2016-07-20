@@ -229,3 +229,10 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+function architecture() {
+	if [ uname -a | grep "x86_64" ]; then
+		return 64
+	fi
+	return 32
+}
+

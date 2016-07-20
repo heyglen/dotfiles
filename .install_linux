@@ -1,42 +1,46 @@
 #!/usr/bin/env bash
 
 function install_python_src() {
-	package_dir=$USER/Downloads/package
+	local package_ext=".i686"
+	local package_dir="$USER/Downloads/package"
+	local python_version="2.7.12"
+	local install_prefix=""
+
 	if [ ! -z $1 ]; then
-		python_version=2.7.12
-	else
-		python_version=$1
+		python_version="$1"
 	fi
 	if [ ! -z $2 ]; then
-		install_prefix=
-	else
 		install_prefix="--prefix=$2"
 	fi
+	if [ architecture = 64 ]; then
+		package_ext=".x86_64"
+	fi
+
+	# Install dependencies
+	sudo yum install -y zlib-devel.$package_ext openssl-devel.$package_ext readline-devel.$package_ext sqlite-devel.$package_ext
 
 	# Setup environment
 	mkdir -p $package_dir
 
 	# Downlaod Requirements
-	wget http://www.python.org/ftp/python/$python_version/Python-$python_version.tgz --directory-prefix=$package_dir
 	wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$package_dir
+	wget http://www.python.org/ftp/python/$python_version/Python-$python_version.tgz --directory-prefix=$package_dir
 
 	# Extract
 	tar zxf $package_dir/Python-$python_version.tgz -C $package_dir
-	rm $package_dir/Python-$python_version.tgz
 
 	# Install
 	## Python
-	cd $package_dir/Python-$python_version
-	./configure $install_prefix
-	make
-	make install
+	$package_dir/Python-$python_version/configure $install_prefix
+	make $package_dir/Python-$python_version
+	make install $package_dir/Python-$python_version
 
 	## Pip
-	cd $package_dir
-	python get-pip.py
+	python $package_dir/get-pip.py
 
 	# Cleanup
 	rm -fr $package_dir/get-pip.py
+	rm $package_dir/Python-$python_version.tgz
 	rm -fr $package_dir/Python-$python_version
 
 	unset package_dir
