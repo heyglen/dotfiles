@@ -3,18 +3,18 @@
 SCRIPT=$(readlink -f -- $0")
 DOTFILESPATH=$(dirname "$SCRIPT" | sed "s/\/c/c:/" | sed "s/\//\\\/g")
 
-git pull origin master;
+git pull origin master
 
 function bootstrap() {
 	if [ -z "$OS" ]; then
-		linuxBootstrap;
+		linuxBootstrap
 	else
 		if [ "$OS" = "Windows_NT" ]; then
-			windowsBootstrap;
+			windowsBootstrap
 		else
 			echo "ERROR: Unknown OS: $OS"
-		fi;
-	fi;
+		fi
+	fi
 }
 
 function windowsBootstrap() {
@@ -22,10 +22,9 @@ function windowsBootstrap() {
 
 	for i in "${dotfiles[@]}"
 	do
-		DOTFILENAME=$(echo "$DOTFILESPATH\\$i")
+		local DOTFILENAME=$(echo "$DOTFILESPATH\\$i")
 		cp -r "$DOTFILENAME" ~
 	done
-	unset DOTFILENAME
 	mv ~/.vimrc ~/_vimrc
 }
 
@@ -35,21 +34,21 @@ function linuxBootstrap() {
 		--exclude "bootstrap.sh" \
 		--exclude "README.md" \
 		--exclude "LICENSE-MIT.txt" \
-		-avh --no-perms . ~;
-	source ~/.bash_profile;
+		-avh --no-perms . ~
+	source ~/.bash_profile
 }
 
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	bootstrap;
+	bootstrap
 else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
+	read -n 1 -p "This may overwrite existing files in your home directory. Are you sure? (y/n) "
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		bootstrap;
-	fi;
-fi;
+		bootstrap
+	fi
+fi
 
-unset bootstrap;
-unset windowsBootstrap;
-unset linuxBootstrap;
-unset SCRIPT;
-unset DOTFILESPATH;
+unset bootstrap
+unset windowsBootstrap
+unset linuxBootstrap
+unset SCRIPT
+unset DOTFILESPATH
