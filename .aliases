@@ -107,7 +107,7 @@ if [ -z "$OS" ]; then
 		## Python
     alias ipy="ipython"
 
-		## Git 
+		## Git
     alias log="git log"
     alias add="git add"
     alias commit="git commit"
@@ -117,7 +117,7 @@ if [ -z "$OS" ]; then
     alias push="git push"
     alias branch="git branch"
     alias checkout="git checkout"
-		
+
 		# Debian
 		alias update="sudo apt update"
 else
@@ -135,5 +135,5 @@ else
 				alias ipy=ipython $*
     else
 				echo "Unknown OS"
-    fi;
-fi;
+    fi
+fi
