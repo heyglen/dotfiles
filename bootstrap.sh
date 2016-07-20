@@ -5,7 +5,7 @@ DOTFILESPATH=$(dirname "$SCRIPT" | sed "s/\/c/c:/" | sed "s/\//\\\/g")
 
 git pull origin master
 
-function bootstrap() {
+function start_bootstrap() {
 	if [ -z "$OS" ]; then
 		linuxBootstrap
 	else
@@ -38,16 +38,9 @@ function linuxBootstrap() {
 	source ~/.bash_profile
 }
 
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
-	bootstrap
-else
-	read -n 1 -p "This may overwrite existing files in your home directory. Are you sure? (y/n) "
-	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		bootstrap
-	fi
-fi
+start_bootstrap
 
-unset bootstrap
+unset start_bootstrap
 unset windowsBootstrap
 unset linuxBootstrap
 unset SCRIPT
