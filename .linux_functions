@@ -236,3 +236,12 @@ function architecture() {
 	return 32
 }
 
+function nix_release() {
+	if uname -a | grep -i "unbuntu" ; then
+		return "ubuntu"
+	elif uname -a | grep -i "redhat" ; then
+		return "redhat"
+	elif uname -a | grep -i "centos" ; then
+		return "centos"
+	fi
+}

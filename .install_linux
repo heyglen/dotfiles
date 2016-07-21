@@ -1,22 +1,35 @@
 #!/usr/bin/env bash
 
-function install_via_yum() {
+function pkgmgr_install() {
 	local package_ext=".i686"
 	if [ architecture = 64 ]; then
 		package_ext=".x86_64"
 	fi
+
+	local installer="yum"
+	local linux_release=`nix_release`
+	if [ linux_release = "ubuntu" ]; then
+		installer="apt"
+	fi
+
+
 	if [ ! -z $1 ]; then
 		python_version="$1"
 	fi
 
 
-	local yum_package
-	local yum_packages
-	for yum_package in $@; do
-		yum_packages+=("$yum_package$package_ext")
+
+	local pkg
+	local pkgs
+	for pkg in $@; do
+		if [ "$installer" = "apt" ]; then
+			pkgs+=("$pkg")
+	else
+			pkgs+=("$pkg$package_ext")
+		fi
 	done
-	yum_packages=`printf "%s " "${yum_packages[@]}"`
-	sudo yum install -y $yum_packages
+	pkgs=`printf "%s " "${pkgs[@]}"`
+	sudo $installer install -y $pkgs
 }
 
 function install_python_src() {
@@ -33,7 +46,7 @@ function install_python_src() {
 	fi
 
 	# Install dependencies
-	install_via_yum zlib-devel openssl-devel readline-devel sqlite-devel gcc-c++
+	pkgmgr_install zlib-devel openssl-devel readline-devel sqlite-devel gcc-c++
 
 	# Setup environment
 	mkdir -p $package_dir
