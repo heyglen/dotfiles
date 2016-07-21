@@ -1,25 +1,19 @@
 #!/usr/bin/env bash
 
 function pkgmgr_install() {
-	local package_ext=".i686"
-	if [ architecture = 64 ]; then
-		package_ext=".x86_64"
-	fi
 
 	local installer="yum"
-	local nix_release=`linix_release`
-	if [ "$nix_release" = "ubuntu" ]; then
+	if lsb_release -d | grep -i ubuntu &> /dev/null ; then
 		installer="apt"
 	fi
-
 
 	if [ ! -z $1 ]; then
 		python_version="$1"
 	fi
 
-
 	local pkg
 	local pkgs
+	local package_ext=`arch`
 	for pkg in $@; do
 		if [ "$installer" = "apt" ]; then
 			pkgs+=("$pkg")
@@ -31,22 +25,30 @@ function pkgmgr_install() {
 	sudo $installer install -y $pkgs
 }
 
-function install_python_src() {
-	local package_ext=".i686"
+function pkgmgr_install_python_src() {
+
+	# Set the python package version
+	if [ ! -z $1 ]; then
+		local python_version="$1"
+	else
+		local python_version="2.7.12"
+	fi
+
 	local package_dir="$USER/Downloads/package"
-	local python_version="2.7.12"
 	local install_prefix=""
 
-	if [ ! -z $1 ]; then
-		python_version="$1"
-	fi
 	if [ ! -z $2 ]; then
 		install_prefix="--prefix=$2"
 	fi
 
 	# Install dependencies
-	pkgmgr_install zlib-devel openssl-devel readline-devel sqlite-devel gcc-c++
+	if lsb_release -d | grep -i ubuntu &> /dev/null ; then
+		`pkgmgr_install libzzip-dev libssl-dev libreadline-dev libsqlite3-dev build-essential`
+	else
+		`pkgmgr_install zlib-devel openssl-devel readline-devel sqlite-devel gcc-c++`
+	fi
 
+	
 	# Setup environment
 	mkdir -p $package_dir
 
