@@ -230,7 +230,7 @@ function tre() {
 }
 
 function architecture() {
-	if [ uname -a | grep "x86_64" ]; then
+	if uname -a | grep "x86_64" &> /dev/null ; then
 		return 64
 	fi
 	return 32

@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 
+function install_via_yum() {
+	local package_ext=".i686"
+	if [ architecture = 64 ]; then
+		package_ext=".x86_64"
+	fi
+	if [ ! -z $1 ]; then
+		python_version="$1"
+	fi
+
+
+	local yum_package
+	local yum_packages
+	for yum_package in $@; do
+		yum_packages+=("$yum_package$package_ext")
+	done
+	yum_packages=`printf "%s " "${yum_packages[@]}"`
+	sudo yum install $yum_packages
+}
+
 function install_python_src() {
 	local package_ext=".i686"
 	local package_dir="$USER/Downloads/package"
@@ -12,12 +31,9 @@ function install_python_src() {
 	if [ ! -z $2 ]; then
 		install_prefix="--prefix=$2"
 	fi
-	if [ architecture = 64 ]; then
-		package_ext=".x86_64"
-	fi
 
 	# Install dependencies
-	sudo yum install -y zlib-devel.$package_ext openssl-devel.$package_ext readline-devel.$package_ext sqlite-devel.$package_ext
+	sudo yum install -y zlib-devel.$package_ext openssl-devel.$package_ext readline-devel.$package_ext sqlite-devel.$package_ext gcc-c++.x86_64$package_ext
 
 	# Setup environment
 	mkdir -p $package_dir
