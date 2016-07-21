@@ -34,6 +34,7 @@ function install_python_src() {
 	$package_dir/Python-$python_version/configure $install_prefix
 	make $package_dir/Python-$python_version
 	if [ "$install_prefix" = "" ]; then
+		echo "Running with sudo"
 		sudo make install $package_dir/Python-$python_version
 		## Pip
 		sudo python $package_dir/get-pip.py
