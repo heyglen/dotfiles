@@ -229,20 +229,14 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-function architecture() {
-	if uname -a | grep "x86_64" &> /dev/null ; then
-		return 64
-	fi
-	return 32
-}
-
 function linux_release() {
-	if uname -a | grep -i "unbuntu" &> /dev/null ; then
+	if lsb_release | grep -i "unbuntu" > /dev/null ; then
 		echo "ubuntu"
-	elif uname -a | grep -i "redhat" &> /dev/null ; then
+	elif lsb_release | grep -i "redhat" > /dev/null ; then
 		echo "redhat"
-	elif uname -a | grep -i "centos" &> /dev/null ; then
+	elif lsb_release | grep -i "centos" > /dev/null ; then
 		echo "centos"
+	else
+		echo "unknown"
 	fi
-	echo "unknown"
 }
