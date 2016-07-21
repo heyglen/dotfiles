@@ -34,12 +34,14 @@ function pkgmgr_install_python_src() {
 		local python_version="2.7.12"
 	fi
 
-	local package_dir="$USER/Downloads/package"
-	local install_prefix=""
-
+	# Set the install directory
 	if [ ! -z $2 ]; then
-		install_prefix="--prefix=$2"
+		local install_prefix="--prefix=$2"
+	else
+		local install_prefix=""
 	fi
+
+	local package_dir="$USER/Downloads/package"
 
 	# Install dependencies
 	if lsb_release -d | grep -i ubuntu &> /dev/null ; then
