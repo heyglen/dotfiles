@@ -26,61 +26,61 @@ function pkgmgr_install() {
 }
 
 function pkgmgr_install_python_src() {
+	local python_version="$1"
+	local install_prefix="$2"
+	local package_dir="$USER/Downloads/package"
 
-	# Set the python package version
-	if [ ! -z $1 ]; then
-		local python_version="$1"
-	else
+	# Set python version
+	if [ "$python_version" = "" ]; then
 		local python_version="2.7.12"
 	fi
 
-	# Set the install directory
-	if [ ! -z $2 ]; then
-		local install_prefix="--prefix=$2"
-	else
-		local install_prefix=""
+	# Set install directory
+	if [ "$install_prefix" = "" ]; then
+		install_prefix="--prefix=$HOME/.local"
 	fi
 
-	local package_dir="$USER/Downloads/package"
-
-	# Install dependencies
+	# Dependencies
 	if lsb_release -d | grep -i ubuntu &> /dev/null ; then
 		`pkgmgr_install libzzip-dev libssl-dev libreadline-dev libsqlite3-dev build-essential`
 	else
 		`pkgmgr_install zlib-devel openssl-devel readline-devel sqlite-devel gcc-c++`
 	fi
 
-	
 	# Setup environment
 	mkdir -p $package_dir
 
-	# Downlaod Requirements
-	wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$package_dir
+	# Python
+
+	## Download
 	wget http://www.python.org/ftp/python/$python_version/Python-$python_version.tgz --directory-prefix=$package_dir
 
-	# Extract
+	## Extract
 	tar zxf $package_dir/Python-$python_version.tgz -C $package_dir
 
-	# Install
-	## Python
+	## Install
 	$package_dir/Python-$python_version/configure $install_prefix
 	make $package_dir/Python-$python_version
 	if [ "$install_prefix" = "" ]; then
-		echo "Running with sudo"
 		sudo make install $package_dir/Python-$python_version
-		## Pip
-		sudo python $package_dir/get-pip.py
 	else
 		make install $package_dir/Python-$python_version
-		## Pip
-		python $package_dir/get-pip.py
 	fi
 
-
-	# Cleanup
-	rm -fr $package_dir/get-pip.py
+	## Cleanup
 	rm $package_dir/Python-$python_version.tgz
 	rm -fr $package_dir/Python-$python_version
+
+	# Pip
+
+	## Download
+	wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$package_dir
+
+	## Install
+	python $package_dir/get-pip.py
+
+	## Cleanup
+	rm -fr $package_dir/get-pip.py
 
 	unset package_dir
 	unset install_prefix
