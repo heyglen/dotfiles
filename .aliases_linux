@@ -12,7 +12,7 @@ alias week='date +%V'
 ## Python
 alias ipy="ipython"
 
-## Git 
+## Git
 alias log="git log"
 alias add="git add"
 alias commit="git commit"
@@ -22,5 +22,6 @@ alias pull="git pull"
 alias push="git push"
 alias branch="git branch"
 alias checkout="git checkout"
-		
+alias gd="git diff"
+
 alias update="sudo apt update"
