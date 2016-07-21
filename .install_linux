@@ -7,8 +7,8 @@ function pkgmgr_install() {
 	fi
 
 	local installer="yum"
-	local linux_release=`nix_release`
-	if [ linux_release = "ubuntu" ]; then
+	local nix_release=`linix_release`
+	if [ nix_release = "ubuntu" ]; then
 		installer="apt"
 	fi
 
