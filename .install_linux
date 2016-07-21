@@ -16,7 +16,7 @@ function install_via_yum() {
 		yum_packages+=("$yum_package$package_ext")
 	done
 	yum_packages=`printf "%s " "${yum_packages[@]}"`
-	sudo yum install $yum_packages
+	sudo yum install -y $yum_packages
 }
 
 function install_python_src() {
@@ -33,7 +33,7 @@ function install_python_src() {
 	fi
 
 	# Install dependencies
-	sudo yum install -y zlib-devel.$package_ext openssl-devel.$package_ext readline-devel.$package_ext sqlite-devel.$package_ext gcc-c++.x86_64$package_ext
+	install_via_yum zlib-devel openssl-devel readline-devel sqlite-devel gcc-c++
 
 	# Setup environment
 	mkdir -p $package_dir
