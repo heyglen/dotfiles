@@ -15,7 +15,8 @@ alias branch=git branch $*
 alias checkout=git checkout $*
 alias b=git branch $*
 alias commit=git commit $*
-alias gd=git git diff $*
+alias gd=git diff $*
+alias remotes=git remotes $*
 
 # Python
 alias ipy=ipython $*

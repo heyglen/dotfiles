@@ -24,5 +24,6 @@ alias push="git push"
 alias branch="git branch"
 alias checkout="git checkout"
 alias gd="git diff"
+alias remotes="git remotes"
 
 alias update="sudo apt update"
