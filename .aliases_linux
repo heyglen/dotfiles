@@ -10,6 +10,7 @@ alias j="jobs"
 alias week='date +%V'
 
 ## Python
+alias py="python"
 alias ipy="ipython"
 
 ## Git
