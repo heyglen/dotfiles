@@ -12,17 +12,19 @@ function start_bootstrap() {
 
 function windowsBootstrap() {
 	local DOTFILESPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-	git --git-dir=$DOTFILESPATH\.git pull origin master
+	DOTFILESPATH=$(echo "$DOTFILESPATH" | sed "s/\/c/C:/" | sed "s/\//\\\/g")
+	echo "$DOTFILESPATH"
+	git --git-dir=$DOTFILESPATH\\.git pull origin master
 
-	DOTFILESPATH=$(echo "$DOTFILESPATH" | sed "s/\/c/c:/" | sed "s/\//\\\/g")
 	dotfiles=( ".aliases" ".bash_profile" ".function" ".bash_prompt" ".bashrc" ".gitignore" ".gitmodules" ".gitconfig" ".inputrc" ".vimrc" ".wgetrc" ".vim" )
 
 	for i in "${dotfiles[@]}"
 	do
-		local DOTFILENAME=$(echo "$DOTFILESPATH\\$i")
-		cp -r "$DOTFILENAME" ~
+		local file_name=$(echo "$DOTFILESPATH\\$i" | sed "s/'\\'/'\'/g")
+		echo "$file_name"
+		# cp -r "$file_name" ~
 	done
-	mv ~/.vimrc ~/_vimrc
+	mv ~\.vimrc ~\_vimrc
 }
 
 function linuxBootstrap() {
