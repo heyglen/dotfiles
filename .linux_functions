@@ -241,7 +241,7 @@ function linux_release() {
 	fi
 }
 
-function get_certificate() {
+function get_cert() {
 	if [[ -n "$1" ]]; then
 		local ssl_server="$1"
 	else
