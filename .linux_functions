@@ -242,5 +242,17 @@ function linux_release() {
 }
 
 function get_certificate() {
-	openssl s_client -connect server:443 <<<'' | openssl x509
+	if [[ -n "$1" ]]; then
+		local ssl_server="$1"
+	else
+		echo "USAGE: $0 <hostname> [<port>]"
+		exit 1
+	fi
+
+	if [[ -n "$2" ]]; then
+		local ssl_port="$2"
+	else
+		local ssl_port="443"
+	fi
+	openssl s_client -connect $ssl_server:$ssl_port <<<'' | openssl x509
 }
