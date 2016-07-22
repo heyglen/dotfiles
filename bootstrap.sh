@@ -38,7 +38,7 @@ function linuxBootstrap() {
 	DOTFILESPATH="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 	# Update
-	git --git-dir=$DOTFILESPATH/.git pull origin master
+	git remote | grep origin &> /dev/null && git --git-dir=$DOTFILESPATH/.git pull origin master
 
 	# Sync
 	rsync --exclude '.git/' \
