@@ -246,7 +246,7 @@ function get_certificate() {
 		local ssl_server="$1"
 	else
 		echo "USAGE: $0 <hostname> [<port>]"
-		exit 1
+		return 1
 	fi
 
 	if [[ -n "$2" ]]; then
