@@ -240,3 +240,7 @@ function linux_release() {
 		echo "unknown"
 	fi
 }
+
+function get_certificate() {
+	openssl s_client -connect server:443 <<<'' | openssl x509
+}
