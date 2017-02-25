@@ -102,7 +102,7 @@ if [ -z "$OS" ]; then
     # Linux
 
 		## Python
-    alias ipy="ipython"
+    alias ipy="ipython3"
 
 		## Git
     alias log="git log"
@@ -115,8 +115,9 @@ if [ -z "$OS" ]; then
     alias branch="git branch"
     alias checkout="git checkout"
 
-		# Debian
-		alias update="sudo apt update"
+    # Debian
+    alias update="sudo apt update"
+	alias o="nautilus ."
 else
     if [ "$OS" = "Windows_NT" ]; then
         # Windows
