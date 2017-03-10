@@ -14,7 +14,7 @@ alias dt="cd ~/Desktop"
 alias h="history"
 
 # Application Shorcuts
-alias ipy="ipython"
+alias ipy="ipython3"
 
 # Typo
 alias ivm="vim"
@@ -130,7 +130,7 @@ else
 				alias checkout=git checkout $*
 				alias b=git branch $*
 				alias commit=git commit $*
-				alias ipy=ipython $*
+				alias ipy=ipython3 $*
     else
 				echo "Unknown OS"
     fi
